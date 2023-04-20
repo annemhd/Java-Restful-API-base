@@ -1,4 +1,4 @@
-# API Rest - Base
+# Java API Rest
 
 <p>Base d'une API REST en java avec <a href="https://spring.io/">Spring Boot</a></p>
 <br>
