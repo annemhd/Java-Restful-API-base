@@ -1,8 +1,8 @@
-package com.example.restservice;
+package com.restservice;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.restservice.User;
+import com.restservice.User;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
