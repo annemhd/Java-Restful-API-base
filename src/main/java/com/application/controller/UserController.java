@@ -38,10 +38,16 @@ public class UserController {
     }
 
     @PostMapping(path = "/user")
-    public @ResponseBody String addNewUser(@RequestParam String name, @RequestParam String email) {
+    public @ResponseBody String addNewUser(
+            @RequestParam String firstname,
+            @RequestParam String lastname,
+            @RequestParam String email,
+            @RequestParam String password) {
         User user = new User();
-        user.setName(name);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
         user.setEmail(email);
+        user.setPassword(password);
         userRepository.save(user);
         return "Le nouvelle utilisateur a bien été sauvegardé";
     }
@@ -49,12 +55,16 @@ public class UserController {
     @PutMapping(path = "/user/{id}/update")
     public @ResponseBody String updateUser(
             @PathVariable Integer id,
-            @RequestParam String name,
-            @RequestParam String email) {
+            @RequestParam String firstname,
+            @RequestParam String lastname,
+            @RequestParam String email,
+            @RequestParam String password) {
 
         User user = userRepository.findById(id).get();
-        user.setName(name);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
         user.setEmail(email);
+        user.setPassword(password);
         userRepository.save(user);
 
         return "L'utilisateur a bien été mis à jour";
