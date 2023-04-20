@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Java API Restful</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</head>
+
+<body id="app" class="p-4">
+    <h1 class="display-1">Java API Restful</h1>
+    <p class="lead mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non dui nec massa consequat iaculis quis at dolor. Aliquam pulvinar tellus ac est porttitor ornare. Donec cursus, velit vitae ultricies imperdiet, sem dolor gravida arcu, in commodo sapien odio eu massa.
+    </p>
+    <hr class="mb-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Path</th>
+                <th scope="col">Method</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="endpoint in endpoints">
+                <td>{{ endpoint.path }}</td>
+                <td>{{ endpoint.method }}</td>
+                <td>{{ endpoint.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+</body>
+
+<script type="module">
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+    createApp({
+        data() {
+            return {
+                endpoints: 
+                [
+                    {
+                        path: 'API/user',
+                        method: 'GET',
+                        description: 'Afficher tout les utilisateurs',
+                    },
+                    {
+                        path: 'API/user/{id}',
+                        method: 'GET',
+                        description: 'Afficher un utilisateur',
+                    },
+                    {
+                        path: 'API/user',
+                        method: 'POST',
+                        description: 'Ajouter un utilisateur',
+                    },
+                    {
+                        path: 'API/user/{id}/update',
+                        method: 'PUT',
+                        description: 'Metre à jour un utilisateur',
+                    },
+                    {
+                        path: 'API/user/{id}/delete',
+                        method: 'DELETE',
+                        description: 'Supprimer un utilisateur',
+                    }
+                ]   
+            }
+        }
+    }).mount('#app')
+
+    const endpoints =  
+        [
+            {
+                path: 'API/user',
+                method: 'GET',
+                description: 'Afficher tout les utilisateurs',
+            },
+            {
+                path: 'API/user/{id}',
+                method: 'GET',
+                description: 'Afficher un utilisateur',
+            },
+            {
+                path: 'API/user',
+                method: 'POST',
+                description: 'Ajouter un utilisateur',
+            },
+            {
+                path: 'API/user/{id}',
+                method: 'PUT',
+                description: 'Metre à jour un utilisateur',
+            },
+            {
+                path: 'API/user/{id}',
+                method: 'DELETE',
+                description: 'Supprimer un utilisateur',
+            }
+        ]   
+  </script>
+</html>

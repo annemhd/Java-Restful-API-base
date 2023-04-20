@@ -1,4 +1,4 @@
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/restservice/MainController.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/restservice/User.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/restservice/AccessingDataMysqlApplication.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/restservice/UserRepository.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/User.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/RestServiceCorsApplication.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/MainController.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/repository/UserRepository.java
