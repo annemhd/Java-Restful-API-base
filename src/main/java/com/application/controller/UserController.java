@@ -20,7 +20,7 @@ import com.application.repository.UserRepository;
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(path = "/API")
-public class MainController {
+public class UserController {
     @Autowired
 
     private UserRepository userRepository;
