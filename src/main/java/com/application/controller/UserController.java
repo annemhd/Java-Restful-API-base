@@ -1,5 +1,6 @@
 package com.application.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.application.model.User;
 import com.application.repository.UserRepository;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(path = "/API")
@@ -24,6 +28,7 @@ public class UserController {
     @Autowired
 
     private UserRepository userRepository;
+    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping(path = "/user")
     public @ResponseBody Iterable<User> getAllUsers() {
@@ -43,11 +48,12 @@ public class UserController {
             @RequestParam String lastname,
             @RequestParam String email,
             @RequestParam String password) {
+
         User user = new User();
         user.setFirstname(firstname);
         user.setLastname(lastname);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
         return "Le nouvelle utilisateur a bien été sauvegardé";
     }
