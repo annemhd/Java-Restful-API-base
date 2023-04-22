@@ -1,6 +1,5 @@
 package com.application.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.application.model.User;
 import com.application.repository.UserRepository;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(path = "/API")
 public class UserController {
     @Autowired
