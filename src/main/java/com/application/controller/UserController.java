@@ -3,6 +3,7 @@ package com.application.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.JpaSort.Path;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,9 +50,8 @@ public class UserController {
     }
 
     @PutMapping(path = "/user/{id}/update", consumes = { "*/*" })
-    public String updateUser(@PathVariable Integer id, @ModelAttribute User user) {
-        User userData = userRepository.findById(id).get();
-        userRepository.save(userData);
+    public String updateUser(@PathVariable("id") long id, @ModelAttribute User body) {
+        userRepository.save(body);
         return "L'utilisateur a bien été mis à jour";
     }
 
