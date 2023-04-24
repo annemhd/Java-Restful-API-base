@@ -1,5 +1,8 @@
 package com.application.model;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +11,8 @@ import jakarta.persistence.Id;
 
 @Entity
 public class User {
+    private static final PasswordEncoder pwEncoder = new BCryptPasswordEncoder();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -58,7 +63,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = pwEncoder.encode(password);
     }
 
 }

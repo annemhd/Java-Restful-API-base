@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.application.model.User;
 import com.application.repository.UserRepository;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping(path = "/API")
@@ -26,9 +24,8 @@ public class UserController {
     @Autowired
 
     private UserRepository userRepository;
-    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    @GetMapping(path = "/user")
+    @GetMapping(path = "/users")
     public @ResponseBody Iterable<User> getAllUsers() {
 
         return userRepository.findAll();
