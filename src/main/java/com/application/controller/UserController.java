@@ -56,9 +56,9 @@ public class UserController {
     }
 
     @GetMapping(path = "/auth")
-    public @ResponseBody String signIn(
-            @PathVariable(value = "email") String email,
-            @PathVariable(value = "password") String password) {
+    public String signIn(
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "password") String password) {
         userRepository.auth(email, password);
         return "L'utilisateur a bien été authentifié";
     }
