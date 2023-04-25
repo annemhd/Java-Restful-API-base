@@ -1,16 +1,14 @@
 package com.application.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.model.user.User;
-import com.application.repository.user.AuthRepository;
 import com.application.repository.user.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -20,7 +18,6 @@ public class AuthController {
     @Autowired
 
     private UserRepository userRepository;
-    private AuthRepository authRepository;
 
     public String MD5(String md5) {
         try {
@@ -36,16 +33,15 @@ public class AuthController {
         return null;
     }
 
-    @PostMapping(path = "/auth", consumes = { "*/*" })
-    public String authUser(@RequestParam String email, @RequestParam String password) {
+    @GetMapping(path = "/auth", consumes = { "*/*" })
+    public @ResponseBody User authUser(@RequestParam String email, @RequestParam String password) {
         User user = userRepository.findByEmail(email).get(0);
         String pwd = MD5(password);
         String pwdUser = user.getPassword();
         if (pwd.equals(pwdUser)) {
-            authRepository.save(user.getFirstname(), user.getLastname(), user.getEmail(), user.getPassword());
-            return "Auth !";
+            return user;
         } else {
-            return "Nope !";
+            return user;
         }
     }
 }
