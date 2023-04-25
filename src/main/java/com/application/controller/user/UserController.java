@@ -1,4 +1,4 @@
-package com.application.controller;
+package com.application.controller.user;
 
 import java.util.Optional;
 
@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.model.User;
-import com.application.repository.UserRepository;
+import com.application.model.user.User;
+import com.application.repository.user.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -53,13 +52,5 @@ public class UserController {
         User user = userRepository.findById(id).get();
         userRepository.delete(user);
         return "L'utilisateur a bien été supprimé";
-    }
-
-    @GetMapping(path = "/auth")
-    public String signIn(
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "password") String password) {
-        userRepository.auth(email, password);
-        return "L'utilisateur a bien été authentifié";
     }
 }
