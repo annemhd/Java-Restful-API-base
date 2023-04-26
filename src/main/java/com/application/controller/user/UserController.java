@@ -36,15 +36,15 @@ public class UserController {
     }
 
     @PostMapping(path = "/user", consumes = { "*/*" })
-    public String addNewUser(@ModelAttribute User body) {
+    public User addNewUser(@ModelAttribute User body) {
         userRepository.save(body);
-        return "L'utilisateur a bien été crée";
+        return body;
     }
 
     @PutMapping(path = "/user/{id}/update", consumes = { "*/*" })
-    public String updateUser(@PathVariable("id") Integer id, @ModelAttribute User body) {
+    public User updateUser(@PathVariable("id") Integer id, @ModelAttribute User body) {
         userRepository.save(body);
-        return "L'utilisateur a bien été mise à jour";
+        return body;
     }
 
     @DeleteMapping(path = "/user/{id}/delete")
