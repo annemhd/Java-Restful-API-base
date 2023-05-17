@@ -1,4 +1,4 @@
-package com.application.controller.user;
+package com.application.controller;
 
 import java.util.Optional;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.model.user.User;
-import com.application.repository.user.UserRepository;
+import com.application.model.User;
+import com.application.repository.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController

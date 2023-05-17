@@ -1,4 +1,4 @@
-package com.application.model.user;
+package com.application.model;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -6,16 +6,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class Auth {
     private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
-    private static byte[] digest(byte[] input) {
+    public static byte[] digest(byte[] input) {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("MD5");
@@ -35,7 +36,7 @@ public class User {
     }
 
     public static String hashPwd(String mdp) {
-        byte[] md5InBytes = User.digest(mdp.getBytes(UTF_8));
+        byte[] md5InBytes = Auth.digest(mdp.getBytes(UTF_8));
         return bytesToHex(md5InBytes).toString();
     }
 
@@ -91,5 +92,4 @@ public class User {
     public void setPassword(String password) {
         this.password = hashPwd(password);
     }
-
 }
