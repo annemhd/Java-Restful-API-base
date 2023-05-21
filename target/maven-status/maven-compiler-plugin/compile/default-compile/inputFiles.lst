@@ -1,7 +1,4 @@
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/User.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/UserController.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/repository/AuthRepository.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/repository/UserRepository.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/repository/UsersRepository.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/UsersController.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/Users.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/Application.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/AuthController.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/Auth.java

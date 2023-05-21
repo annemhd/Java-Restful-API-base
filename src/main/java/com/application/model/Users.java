@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class Users {
     private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     private static byte[] digest(byte[] input) {
@@ -35,14 +37,16 @@ public class User {
     }
 
     public static String hashPwd(String mdp) {
-        byte[] md5InBytes = User.digest(mdp.getBytes(UTF_8));
+        byte[] md5InBytes = Users.digest(mdp.getBytes(UTF_8));
         return bytesToHex(md5InBytes).toString();
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id;
+    @Column(name = "id_user", updatable = false, nullable = false)
+    private Integer id_user;
+
+    private String username;
 
     private String firstname;
 
@@ -52,16 +56,26 @@ public class User {
 
     private String password;
 
+    private LocalDate createdAt = LocalDate.now();
+
     public Integer getId() {
-        return id;
+        return id_user;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUser(Integer id_user) {
+        this.id_user = id_user;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getFirstname() {
         return firstname;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setFirstname(String firstname) {
@@ -73,7 +87,7 @@ public class User {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastname = lastname.toUpperCase();
     }
 
     public String getEmail() {
@@ -92,4 +106,11 @@ public class User {
         this.password = hashPwd(password);
     }
 
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
 }

@@ -14,42 +14,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.model.User;
-import com.application.repository.UserRepository;
+import com.application.model.Users;
+import com.application.repository.UsersRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping(path = "/API")
-public class UserController {
+public class UsersController {
     @Autowired
 
-    private UserRepository userRepository;
+    private UsersRepository userRepository;
 
     @GetMapping(path = "/users")
-    public @ResponseBody Iterable<User> getAllUsers() {
+    public @ResponseBody Iterable<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping(path = "/user/{id}")
-    public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
+    public @ResponseBody Optional<Users> getUser(@PathVariable Integer id) {
         return userRepository.findById(id);
     }
 
     @PostMapping(path = "/user", consumes = { "*/*" })
-    public User addNewUser(@ModelAttribute User body) {
+    public Users addNewUser(@ModelAttribute Users body) {
         userRepository.save(body);
         return body;
     }
 
     @PutMapping(path = "/user/{id}/update", consumes = { "*/*" })
-    public User updateUser(@PathVariable("id") Integer id, @ModelAttribute User body) {
-        userRepository.save(body);
-        return body;
+    public Users updateUser(@PathVariable(value = "id") Integer id, @ModelAttribute Users body) {
+        Users user = userRepository.findById(id).get();
+        user.setUsername(body.getUsername());
+        user.setFirstname(body.getFirstname());
+        user.setLastname(body.getLastname());
+        user.setEmail(body.getEmail());
+        user.setPassword(body.getPassword());
+        userRepository.save(user);
+        return user;
     }
 
     @DeleteMapping(path = "/user/{id}/delete")
     public @ResponseBody String delUser(@PathVariable(value = "id") Integer id) {
-        User user = userRepository.findById(id).get();
+        Users user = userRepository.findById(id).get();
         userRepository.delete(user);
         return "L'utilisateur a bien été supprimé";
     }
