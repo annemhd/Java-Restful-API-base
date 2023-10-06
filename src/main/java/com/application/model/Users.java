@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,13 +55,13 @@ public class Users {
 
     private String password;
 
-    private LocalDate createdAt = LocalDate.now();
+    private LocalDateTime created_at = LocalDateTime.now();
 
-    public Integer getId() {
+    public Integer getId_user() {
         return id_user;
     }
 
-    public void setIdUser(Integer id_user) {
+    public void setId_user(Integer id_user) {
         this.id_user = id_user;
     }
 
@@ -105,11 +105,11 @@ public class Users {
         this.password = hashPwd(password);
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
     }
 }

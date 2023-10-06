@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,14 +41,16 @@ public class UsersController {
         return body;
     }
 
-    @PutMapping(path = "/user/{id}/update", consumes = { "*/*" })
+    @PatchMapping(path = "/user/{id}/update", consumes = { "*/*" })
     public Users updateUser(@PathVariable(value = "id") Integer id, @ModelAttribute Users body) {
         Users user = userRepository.findById(id).get();
         user.setUsername(body.getUsername());
         user.setFirstname(body.getFirstname());
         user.setLastname(body.getLastname());
         user.setEmail(body.getEmail());
-        user.setPassword(body.getPassword());
+        if (body.getPassword() != null) {
+            user.setPassword(body.getPassword());
+        }
         userRepository.save(user);
         return user;
     }

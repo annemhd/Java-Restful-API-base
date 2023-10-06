@@ -1,6 +1,6 @@
 package com.application.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,21 +25,21 @@ public class Articles {
 
     private String status;
 
-    private LocalDate createdAt = LocalDate.now();
+    private LocalDateTime created_at = LocalDateTime.now();
 
-    public Integer getIdArticle() {
+    public Integer getId_article() {
         return id_article;
     }
 
-    public void setIdArticle(Integer id_article) {
+    public void setId_article(Integer id_article) {
         this.id_article = id_article;
     }
 
-    public Integer getIdUser() {
+    public Integer getId_user() {
         return id_user;
     }
 
-    public void setIdUser(Integer id_user) {
+    public void setId_user(Integer id_user) {
         this.id_user = id_user;
     }
 
@@ -75,11 +75,11 @@ public class Articles {
         return status;
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
     }
 }
