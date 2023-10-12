@@ -3,8 +3,6 @@ package com.application.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +42,7 @@ public class ArticlesController {
     }
 
     @PutMapping(path = "/article/{id}/update", consumes = { "*/*" })
-    public Articles updateUser(@PathVariable(value = "id") Integer id, @ModelAttribute Articles body) {
+    public Articles updateUser(@PathVariable Integer id, @ModelAttribute Articles body) {
         Articles article = articlesRepository.findById(id).get();
         article.setTitle(body.getTitle());
         article.setDescription(body.getDescription());
@@ -55,7 +53,7 @@ public class ArticlesController {
     }
 
     @DeleteMapping(path = "/article/{id}/delete")
-    public @ResponseBody String delUser(@PathVariable(value = "id") Integer id) {
+    public @ResponseBody String delUser(@PathVariable Integer id) {
         Articles article = articlesRepository.findById(id).get();
         articlesRepository.delete(article);
         return "L'article a bien été supprimé";
@@ -71,12 +69,12 @@ public class ArticlesController {
         return articlesRepository.findAllSortedPriceByDesc();
     }
 
-    @GetMapping(path = "/articles/order/newest")
+    @GetMapping(path = "/articles/order/oldest")
     public @ResponseBody Iterable<Articles> getArticlesByCreatedAtAsc() {
         return articlesRepository.findAllSortedCreatedAtByAsc();
     }
 
-    @GetMapping(path = "/articles/order/oldest")
+    @GetMapping(path = "/articles/order/newest")
     public @ResponseBody Iterable<Articles> getArticlesByCreatedAtDesc() {
         return articlesRepository.findAllSortedCreatedAtByDesc();
     }

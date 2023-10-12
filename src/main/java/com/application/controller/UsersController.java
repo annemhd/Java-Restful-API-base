@@ -42,7 +42,7 @@ public class UsersController {
     }
 
     @PatchMapping(path = "/user/{id}/update", consumes = { "*/*" })
-    public Users updateUser(@PathVariable(value = "id") Integer id, @ModelAttribute Users body) {
+    public Users updateUser(@PathVariable Integer id, @ModelAttribute Users body) {
         Users user = userRepository.findById(id).get();
         user.setUsername(body.getUsername());
         user.setFirstname(body.getFirstname());
@@ -56,7 +56,7 @@ public class UsersController {
     }
 
     @DeleteMapping(path = "/user/{id}/delete")
-    public @ResponseBody String delUser(@PathVariable(value = "id") Integer id) {
+    public @ResponseBody String delUser(@PathVariable Integer id) {
         Users user = userRepository.findById(id).get();
         userRepository.delete(user);
         return "L'utilisateur a bien été supprimé";
