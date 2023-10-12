@@ -1,9 +1,12 @@
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/repository/UsersRepository.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/repository/ArticlesRepository.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/UsersController.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/service/FilesStorageServiceImpl.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/service/FilesStorageService.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/ArticlesController.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/ThymeleafConfig.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/FileInfo.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/service/ResponseMessage.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/Users.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/Application.java
+/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/FilesController.java
 /Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/model/Articles.java
-/Users/amichaud/Documents/GitHub/Java-API/src/main/java/com/application/controller/UploadController.java
