@@ -3,6 +3,8 @@ package com.application.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,5 +59,25 @@ public class ArticlesController {
         Articles article = articlesRepository.findById(id).get();
         articlesRepository.delete(article);
         return "L'article a bien été supprimé";
+    }
+
+    @GetMapping(path = "/articles/order/priceasc")
+    public @ResponseBody Iterable<Articles> getArticlesBy() {
+        return articlesRepository.findAllSortedPriceByAsc();
+    }
+
+    @GetMapping(path = "/articles/order/pricedesc")
+    public @ResponseBody Iterable<Articles> getArticlesByPriceDesc() {
+        return articlesRepository.findAllSortedPriceByDesc();
+    }
+
+    @GetMapping(path = "/articles/order/newest")
+    public @ResponseBody Iterable<Articles> getArticlesByCreatedAtAsc() {
+        return articlesRepository.findAllSortedCreatedAtByAsc();
+    }
+
+    @GetMapping(path = "/articles/order/oldest")
+    public @ResponseBody Iterable<Articles> getArticlesByCreatedAtDesc() {
+        return articlesRepository.findAllSortedCreatedAtByDesc();
     }
 }

@@ -1,3 +1,9 @@
+com/application/controller/UsersController.class
+com/application/model/Users.class
 com/application/Application$WebConfig$1.class
+com/application/model/Articles.class
 com/application/Application$WebConfig.class
+com/application/repository/ArticlesRepository.class
+com/application/repository/UsersRepository.class
+com/application/controller/ArticlesController.class
 com/application/Application.class
