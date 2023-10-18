@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
 
@@ -30,8 +33,15 @@ public class FilesStorageServiceImpl implements FilesStorageService {
 
   @Override
   public void save(MultipartFile file) {
+
+    LocalDateTime myDateObj = LocalDateTime.now();
+    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss-ns");
+    String formattedDate = myDateObj.format(myFormatObj);
+    String renamedFile = formattedDate.replace('-', ' ').replace(':', ' ').replaceAll("\\s", "");
+
     try {
-      Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+      System.out.println(file);
+      Files.copy(file.getInputStream(), this.root.resolve(renamedFile + ".jpg"));
     } catch (Exception e) {
       if (e instanceof FileAlreadyExistsException) {
         throw new RuntimeException("A file of that name already exists.");
