@@ -53,7 +53,6 @@ public class UsersController {
                 userRepository.save(body);
                 return ResponseEntity.ok(body);
             } else {
-                System.out.println(body.getPassword());
                 return ResponseEntity.status(400).body("Un ou plusieurs champs sont vides ou invalides");
             }
         } catch (Exception e) {

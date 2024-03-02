@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Users {
@@ -16,16 +15,12 @@ public class Users {
     @Column(name = "id_user", updatable = false, nullable = false)
     private Integer id_user;
 
-    @NotNull
     private String username;
 
-    @NotNull
     private String name;
 
-    @NotNull
     private String email;
 
-    @NotNull
     private String password;
 
     private LocalDateTime created_at = LocalDateTime.now();
@@ -49,7 +44,7 @@ public class Users {
     }
 
     public String getName() {
-        return username;
+        return name;
     }
 
     public void setName(String name) {

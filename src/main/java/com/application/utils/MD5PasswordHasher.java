@@ -22,9 +22,4 @@ public class MD5PasswordHasher {
             throw new RuntimeException("Error hashing password with MD5", e);
         }
     }
-
-    public static void main(String password) {
-        String plainPassword = password;
-        String hashedPassword = hashPassword(plainPassword);
-    }
 }
