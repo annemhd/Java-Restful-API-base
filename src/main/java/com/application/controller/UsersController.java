@@ -3,6 +3,7 @@ package com.application.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.model.Users;
 import com.application.repository.UsersRepository;
+import com.application.utils.EmailValidator;
+import com.application.utils.MD5PasswordHasher;
+import com.application.utils.PasswordValidator;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -24,8 +28,13 @@ public class UsersController {
     private UsersRepository userRepository;
 
     @GetMapping(path = "/users")
-    public @ResponseBody Iterable<Users> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<?> getAllUsers() {
+        try {
+            return ResponseEntity.ok(userRepository.findAll());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erreur de serveur");
+        }
+
     }
 
     @GetMapping(path = "/user/{id}")
@@ -34,17 +43,29 @@ public class UsersController {
     }
 
     @PostMapping(path = "/user", consumes = { "*/*" })
-    public Users addNewUser(@ModelAttribute Users body) {
-        userRepository.save(body);
-        return body;
+    public ResponseEntity<?> addNewUser(@ModelAttribute Users body) {
+        try {
+            if (PasswordValidator.isValidPassword(body.getPassword())
+                    && EmailValidator.isValidEmail(body.getEmail())
+                    && body.getUsername() != null
+                    && body.getName() != null) {
+                body.setPassword(MD5PasswordHasher.hashPassword(body.getPassword()));
+                userRepository.save(body);
+                return ResponseEntity.ok(body);
+            } else {
+                System.out.println(body.getPassword());
+                return ResponseEntity.status(400).body("Un ou plusieurs champs sont vides ou invalides");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erreur de serveur");
+        }
     }
 
     @PatchMapping(path = "/user/{id}/update", consumes = { "*/*" })
     public Users updateUser(@PathVariable Integer id, @ModelAttribute Users body) {
         Users user = userRepository.findById(id).get();
         user.setUsername(body.getUsername());
-        user.setFirstname(body.getFirstname());
-        user.setLastname(body.getLastname());
+        user.setName(body.getName());
         user.setEmail(body.getEmail());
         if (body.getPassword() != null) {
             user.setPassword(body.getPassword());
