@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,6 @@ import com.application.repository.UsersRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping(path = "/API")
 public class UsersController {
     @Autowired
 

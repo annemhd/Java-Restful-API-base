@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.List;
+
 @Entity
 public class Articles {
     @Id
@@ -26,6 +28,8 @@ public class Articles {
     private String status;
 
     private LocalDateTime created_at = LocalDateTime.now();
+
+    private List<String> images;
 
     public Integer getId_article() {
         return id_article;
@@ -81,5 +85,13 @@ public class Articles {
 
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public List<String> getImages() {
+        return images;
     }
 }
