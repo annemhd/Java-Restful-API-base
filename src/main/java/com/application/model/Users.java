@@ -1,85 +1,60 @@
 package com.application.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Column;
+import com.application.utils.CryptPassword;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user", updatable = false, nullable = false)
-    private Integer id_user;
+    @NotNull
+    private int id;
 
+    @Size(min = 4, max = 30)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     private String username;
 
+    @Size(min = 4, max = 30)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     private String name;
 
+    @Email(message = "L'adresse mail est invalide")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
     private String email;
 
+    @Transient
+    @Size(min = 8)
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$", message = "Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et une longueur minimale de 8 caractères")
     private String password;
 
-    private LocalDateTime created_at = LocalDateTime.now();
+    private String hash_password;
 
-    private LocalDateTime logged_at = null;
+    private LocalDateTime created_at;
 
-    public Integer getId_user() {
-        return id_user;
-    }
+    private List<@Size(max = 200) String> articles;
 
-    public void setId_user(Integer id_user) {
-        this.id_user = id_user;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
-
-    public LocalDateTime getLogged_at() {
-        return logged_at;
-    }
-
-    public void setLogged_at(LocalDateTime logged_at) {
-        this.logged_at = logged_at;
+    @PrePersist
+    public void prePersist() {
+        this.hash_password = CryptPassword.cryptPassword(this.password);
+        this.created_at = LocalDateTime.now();
     }
 }

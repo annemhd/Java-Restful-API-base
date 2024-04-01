@@ -1,82 +1,128 @@
 package com.application.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.model.Users;
 import com.application.repository.UsersRepository;
-import com.application.utils.EmailValidator;
-import com.application.utils.MD5PasswordHasher;
-import com.application.utils.PasswordValidator;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/users")
 public class UsersController {
     @Autowired
 
-    private UsersRepository userRepository;
+    private UsersRepository usersRepository;
 
-    @GetMapping(path = "/users")
-    public ResponseEntity<?> getAllUsers() {
-        try {
-            return ResponseEntity.ok(userRepository.findAll());
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erreur de serveur");
-        }
+    @GetMapping(path = "/get")
+    public ResponseEntity<?> getUsers() {
+        Iterable<Users> users = usersRepository.findAll();
 
-    }
+        if (!users.iterator().hasNext()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Pas d'utilisateurs trouvés");
+        } else {
+            List<Map<String, String>> userList = new ArrayList<>();
 
-    @GetMapping(path = "/user/{id}")
-    public @ResponseBody Optional<Users> getUser(@PathVariable Integer id) {
-        return userRepository.findById(id);
-    }
-
-    @PostMapping(path = "/user", consumes = { "*/*" })
-    public ResponseEntity<?> addNewUser(@ModelAttribute Users body) {
-        try {
-            if (PasswordValidator.isValidPassword(body.getPassword())
-                    && EmailValidator.isValidEmail(body.getEmail())
-                    && body.getUsername() != null
-                    && body.getName() != null) {
-                body.setPassword(MD5PasswordHasher.hashPassword(body.getPassword()));
-                userRepository.save(body);
-                return ResponseEntity.ok(body);
-            } else {
-                return ResponseEntity.status(400).body("Un ou plusieurs champs sont vides ou invalides");
+            for (Users user : users) {
+                Map<String, String> userMap = new HashMap<>();
+                userMap.put("username", user.getUsername());
+                userMap.put("name", user.getName());
+                userMap.put("email", user.getEmail());
+                userMap.put("created_at", user.getCreated_at().toString());
+                userList.add(userMap);
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erreur de serveur");
+
+            return ResponseEntity.ok(userList);
         }
     }
 
-    @PatchMapping(path = "/user/{id}/update", consumes = { "*/*" })
-    public Users updateUser(@PathVariable Integer id, @ModelAttribute Users body) {
-        Users user = userRepository.findById(id).get();
-        user.setUsername(body.getUsername());
-        user.setName(body.getName());
-        user.setEmail(body.getEmail());
-        if (body.getPassword() != null) {
-            user.setPassword(body.getPassword());
+    @GetMapping(path = "/{id}/get")
+    public ResponseEntity<?> getUser(@PathVariable("id") int id) {
+        Optional<Users> optionalUser = usersRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            Users existingUser = optionalUser.get();
+
+            List<Map<String, String>> userFound = new ArrayList<>();
+
+            Map<String, String> userMap = new HashMap<>();
+            userMap.put("username", existingUser.getUsername());
+            userMap.put("name", existingUser.getName());
+            userMap.put("email", existingUser.getEmail());
+            userMap.put("created_at", existingUser.getCreated_at().toString());
+            userFound.add(userMap);
+
+            return ResponseEntity.ok(userFound);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("L'utilisateur est introuvable");
         }
-        userRepository.save(user);
-        return user;
     }
 
-    @DeleteMapping(path = "/user/{id}/delete")
-    public @ResponseBody String delUser(@PathVariable Integer id) {
-        Users user = userRepository.findById(id).get();
-        userRepository.delete(user);
-        return "L'utilisateur a bien été supprimé";
+    @PostMapping(path = "/create")
+    public Map<String, Object> createUser(@RequestBody @Validated Users request) {
+        Users createdUser = usersRepository.save(request);
+
+        return Map.of("username", createdUser.getUsername(), "name", createdUser.getName(),
+                "email",
+                createdUser.getEmail(), "created_at", createdUser.getCreated_at());
+    }
+
+    @PutMapping(path = "/{id}/update")
+    public ResponseEntity<?> updateUser(@PathVariable("id") int id, @RequestBody @Validated Users updatedUser) {
+        Optional<Users> optionalUser = usersRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            Users existingUser = optionalUser.get();
+
+            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setName(updatedUser.getName());
+            existingUser.setEmail(updatedUser.getEmail());
+
+            if (updatedUser.getPassword() != existingUser.getPassword()) {
+                existingUser.setPassword(updatedUser.getPassword());
+            }
+
+            System.out.print(existingUser.getPassword());
+            System.out.print(updatedUser.getPassword());
+
+            usersRepository.save(existingUser);
+
+            return ResponseEntity.ok("L'utilisateur a bien été mis à jour");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("L'utilisateur est introuvable");
+        }
+    }
+
+    @PutMapping(path = "/{id}/password/")
+    public ResponseEntity<?> updateUserPassword(@PathVariable("id") int id, @RequestBody Users updatedUser) {
+        Optional<Users> optionalUser = usersRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            Users existingUser = optionalUser.get();
+
+            existingUser.setPassword(updatedUser.getPassword());
+
+            usersRepository.save(existingUser);
+
+            return ResponseEntity.ok("Le mot de passe a bien été mis à jour");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("L'utilisateur est introuvable");
+        }
     }
 }
