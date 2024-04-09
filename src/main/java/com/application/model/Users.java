@@ -3,8 +3,6 @@ package com.application.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.application.utils.CryptPassword;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,12 +39,9 @@ public class Users {
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
     private String email;
 
-    @Transient
     @Size(min = 8)
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$", message = "Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et une longueur minimale de 8 caractères")
     private String password;
-
-    private String hash_password;
 
     private LocalDateTime created_at;
 
@@ -54,7 +49,6 @@ public class Users {
 
     @PrePersist
     public void prePersist() {
-        this.hash_password = CryptPassword.cryptPassword(this.password);
         this.created_at = LocalDateTime.now();
     }
 }

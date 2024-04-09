@@ -1,8 +1,0 @@
-com/application/Application$WebConfig$1.class
-com/application/utils/EmailValidator.class
-com/application/Application$WebConfig.class
-com/application/repository/ArticlesRepository.class
-com/application/controller/ArticlesController.class
-com/application/Application.class
-com/application/utils/PasswordValidator.class
-com/application/model/Articles.class

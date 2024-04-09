@@ -98,9 +98,6 @@ public class UsersController {
                 existingUser.setPassword(updatedUser.getPassword());
             }
 
-            System.out.print(existingUser.getPassword());
-            System.out.print(updatedUser.getPassword());
-
             usersRepository.save(existingUser);
 
             return ResponseEntity.ok("L'utilisateur a bien été mis à jour");
