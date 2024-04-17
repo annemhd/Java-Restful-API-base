@@ -26,7 +26,6 @@ public class User {
     private String name;
     private String email;
     @Size(min = 8)
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$", message = "Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et une longueur minimale de 8 caractères")
     private String password;
     @CreationTimestamp
     @Column(name = "created_at")
