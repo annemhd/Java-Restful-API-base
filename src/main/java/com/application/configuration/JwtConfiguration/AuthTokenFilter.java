@@ -1,6 +1,7 @@
 package com.application.configuration.JwtConfiguration;
 
-import com.application.services.UserDetailsServiceImpl;
+import com.application.services.user.UserDetailsServiceImpl;
+import com.application.services.user.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

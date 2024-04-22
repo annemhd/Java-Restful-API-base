@@ -2,6 +2,8 @@ package com.application.services;
 
 import com.application.model.User;
 import com.application.repository.UsersRepository;
+import com.application.services.user.UserService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

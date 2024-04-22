@@ -3,6 +3,8 @@ package com.application.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.application.configuration.JwtConfiguration.AuthEntryPointJwt;
 import com.application.configuration.JwtConfiguration.AuthTokenFilter;
@@ -31,6 +32,8 @@ public class SecurityConfiguration {
 
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
+
+  private static final String[] WHITE_LIST_URL = { "/h2-console/**", "/signin", "/signup", "/user-dashboard" };
 
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -53,19 +56,18 @@ public class SecurityConfiguration {
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
+      throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
-        .httpBasic(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests((requests) -> requests
-            .anyRequest().permitAll())
+        .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL)
+            .permitAll()
+            .anyRequest()
+            .authenticated())
         .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
         .authenticationProvider(authenticationProvider())
-        .addFilterBefore(
-            authenticationJwtTokenFilter(),
-            UsernamePasswordAuthenticationFilter.class);
-    ;
+        .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

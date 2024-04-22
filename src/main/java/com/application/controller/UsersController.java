@@ -5,7 +5,8 @@ import com.application.httpmodel.HttpUser;
 import com.application.httpmodel.UpdateUserPasswordRequest;
 import com.application.httpmodel.UpdateUserRequest;
 import com.application.model.User;
-import com.application.services.UserService;
+import com.application.services.user.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class UsersController {
   @PatchMapping(path = "/{id}/password")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void updateUserPassword(@PathVariable("id") int id,
-                                 @RequestBody @Validated UpdateUserPasswordRequest request) {
+      @RequestBody @Validated UpdateUserPasswordRequest request) {
     userService.updateUserPassword(id, request.password());
   }
 }

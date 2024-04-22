@@ -1,6 +1,6 @@
 package com.application.configuration.JwtConfiguration;
 
-import com.application.services.UserDetailsImpl;
+import com.application.services.user.UserDetailsImpl;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

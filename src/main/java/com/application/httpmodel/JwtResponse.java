@@ -1,4 +1,4 @@
-package com.application.response;
+package com.application.httpmodel;
 
 public class JwtResponse {
     private String token;

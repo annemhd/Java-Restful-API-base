@@ -1,4 +1,4 @@
-package com.application.request;
+package com.application.httpmodel;
 
 public class LoginRequest {
 

@@ -1,4 +1,4 @@
-package com.application.services;
+package com.application.services.user;
 
 import com.application.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,14 +11,14 @@ import java.util.Objects;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private Integer id;
 
     private String username;
 
     @JsonIgnore
     private String password;
 
-    public UserDetailsImpl(int id, String username, String password) {
+    public UserDetailsImpl(Integer id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -27,10 +27,10 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
 
-        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getPassword());
+        return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword());
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
