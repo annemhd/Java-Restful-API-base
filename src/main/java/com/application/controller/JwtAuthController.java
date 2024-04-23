@@ -75,5 +75,4 @@ public class JwtAuthController {
     public String dashboard() {
         return "My Dashboard";
     }
-
 }

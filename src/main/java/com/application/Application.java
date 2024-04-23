@@ -13,15 +13,16 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  @Configuration
-  public class CorsConfig implements WebMvcConfigurer {
+  // @Configuration
+  // public class CorsConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-      registry.addMapping("/**")
-          .allowedOrigins("*") // Replace with your frontend domain
-          .allowedMethods("GET", "POST", "PUT", "DELETE")
-          .allowedHeaders("*");
-    }
-  }
+  // @Override
+  // public void addCorsMappings(CorsRegistry registry) {
+  // registry.addMapping("/**")
+  // .allowedOrigins("http://localhost:3000/") // Replace with your frontend
+  // domain
+  // .allowedMethods("GET", "POST", "PUT", "DELETE")
+  // .allowedHeaders("*");
+  // }
+  // }
 }
