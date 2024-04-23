@@ -1,15 +1,18 @@
 package com.application.repository;
 
-import java.util.List;
+import com.application.model.User;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
 
-import com.application.model.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsersRepository extends CrudRepository<Users, Integer> {
-    List<Users> findByEmail(String email);
+public interface UsersRepository extends JpaRepository<User, Integer> {
 
     boolean existsByEmail(String email);
 
+    Optional<User> findByEmail(String email);
+
     boolean existsByUsername(String username);
+
+    Optional<User> findByUsername(String username);
 }
